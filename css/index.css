@@ -1,0 +1,174 @@
+/*OVERALL CSS*/
+body {
+  background-color: #D1CFE2;
+}
+* {
+  color: #000030;
+  font-family: 'Montserrat:ital,wght@1,500', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  box-sizing: border-box;
+  overflow: auto;
+}
+input, button, textarea {
+  background-color: #D1CFE2;
+  border: 2px solid #000030;
+}
+
+
+/*HEADER + NAVIGATION*/
+nav {
+  background-color: #D4AFB9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 110px;
+  overflow: hidden;
+  z-index: 15;
+}
+nav > header {
+  float: left;
+}
+nav > header > a > img#logo {
+  margin: 5px 0 5px 10px;
+}
+nav > header > img#header {
+  margin: -30px 0 25px -45px;
+}
+nav > ul, nav > ul > li {
+  float: left;
+  position: relative;
+  top: -16px;
+  left: -15px;
+  margin-bottom: -35px;
+}
+nav > ul > li {
+  list-style-type: none;
+  font-size: 40px;
+  padding: 50px 15px;
+  margin: 0;
+  text-align: center; 
+}
+nav > ul > li > a {
+  text-decoration: none;
+  color: #000030;
+}
+nav > ul > li:hover {
+  background-color: #9CADCE;
+}
+
+
+/*MAIN CONTENT*/
+section#mainContent {
+  margin-top: 110px;
+}
+section#leaderboards, section#userInfo {
+  float: left;
+  width: 49%;
+  height: 200px;
+  margin: 5px;
+  padding: 10px;
+  background-color: #9CADCE;
+  text-align: center;
+}
+
+/*LEADERBOARDS*/
+section#leaderboards > h1 {
+  font-size: 200%;
+  margin-top: 5px;
+}
+
+/*USER INFORMATION*/
+section#userInfo > h1 {
+  font-size: 200%;
+  margin-top: 5px;
+}
+section#userInfo > p {
+  margin-top: -20px;
+}
+
+/*GRAPHIC NAVIGATION (ONLY ON HOMEPAGE)*/
+section#navGraphic {
+  clear: left;
+}
+section#navGraphic > a > img {
+  float: left;
+  width: 49%;
+  height: 270px;
+  margin: 5px;
+}
+section#navGraphic > a > img:hover {
+  opacity: 0.5;
+}
+
+
+/*POP-UP FORM*/
+div.formPopup {  
+  display: none; /*HIDDEN BY DEFAULT*/
+  position: absolute;
+  top: 125px;
+  bottom: 75px;
+  left: 25%;
+  right: 25%;
+  background-color: #D4AFB9;
+  border: 2px solid #D1CFE2;
+  text-align: center;
+}
+div.formPopup > form#logIn {
+  padding: 10px;
+}
+div.formPopup > form#logIn > h1 {
+  margin: -3px 0 15px 0;
+}
+
+
+/*RESPONSIVITY*/
+/*changing the formatting for a screen's width <10020*/
+@media only screen and (max-width: 1020px) {
+  section#leaderboards, section#userInfo, section#navGraphic > a > img {
+    width: 48%;
+  }
+}
+
+/*changing the formatting for a screen's width <880px*/
+@media only screen and (max-width: 880px) {
+  nav > ul > li {
+    font-size: 20px;
+  }
+}
+/*changing the formatting for a screen's width <620px*/
+@media only screen and (max-width: 620px) {
+  nav > header > img#header {
+    width: 0;
+    margin: 0;
+  }
+}
+
+/*changing the formatting for a screen's width <530px*/
+@media only screen and (max-width: 530px) {
+  section#leaderboards, section#userInfo, section#navGraphic > a > img {
+    width: 100%;
+    clear: left;
+  }
+  div.formPopup {  
+    display: none; /*HIDDEN BY DEFAULT*/
+    left: 15%;
+    right: 15%;
+  }
+}
+
+/*changing the formatting for a screen's width <465px*/
+@media only screen and (max-width: 465px) {
+  nav > ul {
+    margin: 20px 0 -10px 5px;
+    position: relative;
+    top: 0;
+  }
+  nav > ul > li {
+    clear: left;
+    font-size: 18px;
+    padding: 10px;
+  }  
+  nav > ul > li:first-child {
+    padding-top: 25px;
+  }
+}

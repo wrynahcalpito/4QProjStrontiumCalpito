@@ -1,0 +1,95 @@
+/*OVERALL CSS*/
+body {
+    background-color: #D1CFE2;
+}
+* {
+    color: #000030;
+    font-family: 'Montserrat:ital,wght@1,500', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
+    overflow: auto;
+}
+input, button, textarea {
+    background-color: #D1CFE2;
+    border: 2px solid #000030;
+}
+
+  
+/*HEADER + NAVIGATION*/
+nav {
+    background-color: #D4AFB9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
+    overflow: hidden;
+    z-index: 15;
+}
+nav > header {
+    float: left;
+}
+nav > header > a > img#logo {
+    margin: 5px 0 5px 10px;
+}
+nav > header > img#header {
+    margin: -30px 0 25px -45px;
+}
+nav > ul, nav > ul > li {
+    float: left;
+    position: relative;
+    top: -16px;
+    left: -15px;
+    margin-bottom: -35px;
+}
+nav > ul > li {
+    list-style-type: none;
+    font-size: 40px;
+    padding: 50px 15px;
+    margin: 0;
+    text-align: center; 
+}
+nav > ul > li > a {
+    text-decoration: none;
+    color: #000030;
+}
+nav > ul > li:hover {
+    background-color: #9CADCE;
+}
+
+
+/*MAIN CONTENT - FORM GAME*/
+form#game {
+    margin-top: 110px;
+}
+
+
+/*RESPONSIVITY*/
+/*changing the formatting for a screen's width <880px*/
+@media only screen and (max-width: 880px) {
+    nav > ul > li {
+        font-size: 20px;
+    }
+}
+/*changing the formatting for a screen's width <620px*/
+@media only screen and (max-width: 620px) {
+    nav > header > img#header {
+        width: 0;
+        margin: 0;
+    }
+} 
+/*changing the formatting for a screen's width <465px, for phones*/
+@media only screen and (max-width: 465px) {
+    nav > ul {
+        margin: 20px 0 -10px 5px;
+        position: relative;
+        top: 0;
+    }
+    nav > ul > li {
+        clear: left;
+        font-size: 18px;
+        padding: 10px;
+    }  
+    nav > ul > li:first-child {
+        padding-top: 25px;
+    }
+}
