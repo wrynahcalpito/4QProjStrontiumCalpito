@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>K-lassically: QuicK Facts</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Wrynah Dale Calpito">
+    <meta name="revised" content="07-05-2022">
+    <meta name="keywords" content="Kpop, Korea, trivia, quiz game, fun facts">
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="../images/logo.png">
+    <link rel="stylesheet" type="text/css" href="../css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap" rel="stylesheet">
+</head>
+
+<body onload="generateGame()">
+    <!--NAVIGATION-->
+    <nav>
+        <header>
+            <a href="../index.html"> <img src="../images/logo.png" title="K-lassically Logo" alt="K-lassically Logo" id="logo" width="100px" height="100px"> </a>
+            <img src="../images/header.png" title="K-lassically" alt="K-lassically" id="header" height="75px">
+        </header>
+
+        <ul>
+            <li><a href="quickfacts.html">QuicK Facts</a></li>
+            <li><a href="guesstheklassics.html">Guess the Klassics</a></li>
+        </ul>
+    </nav>
+    
+    <!--THE GAME-->
+    <form id="game" method="post" autocomplete="off" onsubmit="return generateResults()"> 
+    </form>
+
+    <!--THE RESULTS FOR THAT GAME-->
+    <div id="results"></div>
+
+    <script> 
+        //QUESTION BANK
+        var easyQuestions = [
+            {question:"Which of the following is not part of the original Big 3 companies?", choice1:"YG", choice2:"SM", choice3:"JYP", choice4:"HYBE", rightAnswer:"HYBE"}, 
+            {question:"Which group came up with the concept of the lightstick first?", choice1:"Wonder Girls", choice2:"Seo Taiji and Boys", choice3:"Big Bang", choice4:"SNSD / Girls Generation", rightAnswer:"Big Bang"}, 
+            {question:"Which group doesn't have a lightstick but a LIGHTBAND?", choice1:"GOT7", choice2:"NFlying", choice3:"DAY6", choice4:"Red Velvet", rightAnswer:"DAY6"}, 
+            {question:"Which group doesn't have a lightstick but a LIGHTRING?", choice1:"ITZY", choice2:"Stray Kids", choice3:"aespa", choice4:"The Boyz", rightAnswer:"ITZY"}, 
+            {question:"Which artists is NOT part of the 1st generation of K-pop?", choice1:"Seo Taiji and Boys", choice2:"SNSD / Girls Generation", choice3:"H.O.T.", choice4:"S.E.S.", rightAnswer:"SNSD / Girls Generation"}, 
+            {question:"Which artists is NOT part of the 2nd generation of K-pop?", choice1:"Turbo", choice2:"SHINHWA", choice3:"Wonder Girls", choice4:"TVXQ", rightAnswer:"Turbo"}, 
+            {question:"Which artists is NOT part of the 3rd generation of K-pop?", choice1:"BTS", choice2:"NU'EST", choice3:"MAMAMOO", choice4:"ITZY", rightAnswer:"ITZY"}, 
+            {question:"Which artists is NOT part of the 4th generation of K-pop?", choice1:"TOMORROW X TOGETHER / TXT", choice2:"aespa", choice3:"MONSTA X", choice4:"IVE", rightAnswer:"MONSTA X"}, 
+            {question:"Who is known as the Nation's Little Sister (2022)?", choice1:"Jang Wonyoung (IVE)", choice2:"IU (soloist)", choice3:"Tzuyu (TWICE)", choice4:"Jisoo (BLACKPINK)", rightAnswer:"IU (soloist)"}, 
+            {question:"Who is known as the Nation's First Love (2022)?", choice1:"Lisa (BLACKPINK)", choice2:"Joy (Red Velvet)", choice3:"Bae Suzy (Miss-A)", choice4:"Naeun (Apink)", rightAnswer:"Bae Suzy (Miss-A)"}, 
+            {question:"Who is known as the Nation's Girl Group (2022)?", choice1:"TWICE", choice2:"MAMAMOO", choice3:"Red Velvet", choice4:"BLACKPINK", rightAnswer:"TWICE"}, 
+            {question:"Who is known as the Nation's Boy Group (2022)?", choice1:"EXO", choice2:"Stray Kids", choice3:"BTS", choice4:"NCT 127", rightAnswer:"BTS"}, 
+            {question:"Which group did NOT come from a survival show?", choice1:"IOI", choice2:"TWICE", choice3:"THE BOYZ", choice4:"MONSTA X", rightAnswer:"THE BOYZ"}, 
+            {question:"Which is NOT a K-pop group position?", choice1:"Main Vocal", choice2:"Lead Rapper", choice3:"Sub Dancer", choice4:"Maknae", rightAnswer:"Sub Dancer"}, 
+            {question:"Which is NOT an indie Korean act?", choice1:"Epik High", choice2:"Jannabi", choice3:"DAY6", choice4:"The Solutions", rightAnswer:"DAY6"}, 
+            {question:"Who is the first openly gay K-pop idol?", choice1:"Yeri (Red Velvet)", choice2:"Holland (soloist)", choice3:"Jimin (BTS)", choice4:"Chuu (LOONA)", rightAnswer:"Holland (soloist)"}  
+        ];
+        var mediumQuestions = [
+            {question:"What is DAY6's most popular hit?", choice1:"Days Gone By", choice2:"Hot Potato", choice3:"Like A Flowing Wind", choice4:"You Were Beautiful", rightAnswer:"You Were Beautiful"}, 
+            {question:"How many official DAY6 members are there as of 2022?", choice1:3, choice2:4, choice3:5, choice4:6, rightAnswer:4},
+            {question:"In which year did BTS get their first Daesang?", choice1:2015, choice2:2016, choice3:2017, choice4:2018, rightAnswer:2016}, 
+            {question:"Who was famous in the Philippines before becoming a K-pop idol?", choice1:"Sandara Park (2NE1)", choice2:"Kriesha Chu (soloist)", choice3:"Cha Eunwoo (ASTRO)", choice4:"Nancy (MOMOLAND)", rightAnswer:"Sandara Park (2NE1)"}, 
+            {question:"Who said the famous quote, 'We're not a team. This is a competition.' in Unpretty Rapstar?", choice1:"Jimin (AOA)", choice2:"Jennie (BLACKPINK)", choice3:"Jessi (soloist)", choice4:"Hyuna (soloist)", rightAnswer:"Jessi (soloist)"}, 
+            {question:"Which group has the most musical autonomy?", choice1:"Twice", choice2:"ITZY", choice3:"SNSD / Girls Generation", choice4:"iKON", rightAnswer:"iKON"}, 
+            {question:"Which soloist is most involved in choreography?", choice1:"IU", choice2:"Jessi", choice3:"Chungha", choice4:"WOODZ", rightAnswer:"Chungha"}, 
+            {question:"Who has NOT been part of a Korean TV drama or web drama?", choice1:"Wonpil (DAY6)", choice2:"Sejeong (IOI / GUGUDAN)", choice3:"Jin (BTS)", choice4:"Irene (Red Velvet)", rightAnswer:"Jin (BTS)"}, 
+            {question:"What is TWICE's debut song?", choice1:"Like OOH-AHH", choice2:"Cheer Up", choice3:"Signal", choice4:"Likey", rightAnswer:"Like OOH-AHH"}, 
+            {question:"Which survival show group lasted for the shortest time?", choice1:"WANNA ONE", choice2:"IOI", choice3:"X1", choice4:"IZ*ONE", rightAnswer:"X1"},
+            {question:"In which award show did BTS have their US TV performance debut?", choice1:"The Grammys", choice2:"American Music Awards (AMAs)", choice3:"Billboard Music Awards (BBMAs)", choice4:"MTV Video Music Awards", rightAnswer:"American Music Awards (AMAs)"},
+            {question:"What is NOT an NCT unit?", choice1:"NCT 127", choice2:"WAYV", choice3:"NCT DREAM", choice4:"NCT X", rightAnswer:"NCT X"},
+            {question:"What is NOT a real K-pop award show?", choice1:"MAMA (Mnet Asian Music Awards)", choice2:"MMA (Melon Music Awards)", choice3:"GMA (Gaon Music Awards)", choice4:"KMA (Kakao Music Awards)", rightAnswer:"KMA (Kakao Music Awards)"},
+            {question:"Which song was dedicated to the Sewol Ferry Tragedy?", choice1:"I Would by DAY6", choice2:"Spring Day by BTS", choice3:"Untitled, 2014 by G-Dragon", choice4:"Breathe by Lee Hi", rightAnswer:"Spring Day by BTS"},
+            {question:"What is the most popular genre of Korean popular music?", choice1:"Ballad", choice2:"RnB", choice3:"Idol music", choice4:"Rock", rightAnswer:"Ballad"},
+            {question:"Who is the K-pop idol who has a famous clown meme?", choice1:"Bang Chan (Stray Kids)", choice2:"Jackson (GOT7)", choice3:"Sehun (EXO)", choice4:"Key (SHINee)", rightAnswer:"Key (SHINee)"}   
+        ];
+        var difficultQuestions = [
+            {question:"Which K-pop idol got a letter written in period blood from a sasaeng fan?", choice1:"Seungri (Big Bang)", choice2:"Taecyeon (2PM)", choice3:"Chen (EXO)", choice4:"Jimin (BTS)", rightAnswer:"Taecyeon (2PM)"},
+            {question:"Which K-pop idol was stalked by a fan named Josh?", choice1:"Nayeon (TWICE)", choice2:"Jihyo (TWICE)", choice3:"Tzuyu (TWICE)", choice4:"Irene (Red Velvet)", rightAnswer:"Nayeon (TWICE)"},
+            {question:"Which group was abducted in Kazakhstan?", choice1:"NU'EST", choice2:"VIXX", choice3:"Big Bang", choice4:"BEAST / HIGHLIGHT", rightAnswer:"VIXX"},
+            {question:"Who shocked Melanie Trump with his popularity?", choice1:"Minho (SHINee)", choice2:"V (BTS)", choice3:"Chanyeol (EXO)", choice4:"Nickhun (2PM)", rightAnswer:"Minho (SHINee)"},
+            {question:"What K-pop group toured with Lady Gaga?", choice1:"BLACKPINK", choice2:"Wonder Girls", choice3:"Crayon Pop", choice4:"Orange Caramel", rightAnswer:"Crayon Pop"},
+            {question:"What K-pop girl group is Grimes a fan of?", choice1:"WJSN", choice2:"LOONA", choice3:"TWICE", choice4:"BLACKPINK", rightAnswer:"LOONA"},
+            {question:"Who was almost recruited in a cult?", choice1:"J-hope (BTS)", choice2:"Seungri (Big Bang)", choice3:"Jisung (NCT)", choice4:"Hyunjin (Stray Kids)", rightAnswer:"Hyunjin (Stray Kids)"},
+            {question:"Which public figure mentioned SHINee?", choice1:"Barack Obama", choice2:"Moon Jae-in", choice3:"Elon Musk", choice4:"Donald Trump", rightAnswer:"Barack Obama"},
+            {question:"Who chose their company solely based on how close it is to their house?", choice1:"Taeyong (NCT)", choice2:"Taehyun (TXT)", choice3:"Yeji (ITZY)", choice4:"Karina (aespa)", rightAnswer:"Taehyun (TXT)"},
+            {question:"Which K-pop group ran to their music show?", choice1:"SNSD / Girls Generation", choice2:"Laboum", choice3:"Girl's Day", choice4:"2NE1", rightAnswer:"SNSD / Girls Generation"},
+            {question:"What song was banned by the Korean government because it was too catchy?", choice1:"Replay by SHINee", choice2:"Gee by SNSD / Girls Generation", choice3:"Ring Ding Dong by SHINee", choice4:"Love Scenario by iKON", rightAnswer:"Ring Ding Dong by SHINee"},
+            {question:"Who was the supposed 5th BLACKPINK member?", choice1:"Nayeon (TWICE)", choice2:"Miyeon ((G)I-DLE)", choice3:"Yuna (ITZY)", choice4:"Yeri (Red Velvet)", rightAnswer:"Miyeon ((G)I-DLE)"},
+            {question:"Who was recently praised (2022) for a variety of facial expressions on stage?", choice1:"Ningning (aespa)", choice2:"Lily (NMIXX)", choice3:"Tsuki (BILLLIE)", choice4:"Yujin (IVE)", rightAnswer:"Tsuki (BILLLIE)"},
+            {question:"Which trio did NOT host Inkigayo together?", choice1:"Roh Jeong-eui, Choi Yeon-jun, Seo Bum-june", choice2:"Ha Yeon-joo, Taecyeon, Wooyoung", choice3:"Park Jin-young, Jisoo, Doyoung", choice4:"Jackson Wang, Mingyu, IU", rightAnswer:"Jackson Wang, Mingyu, IU"},
+            {question:"To whom did Taeyang dedicate Eyes, Noes, Lips?", choice1:"G-Dragon", choice2:"Min Hyorin", choice3:"Bae Suzy", choice4:"Seo Taiji", rightAnswer:"Min Hyorin"}  
+        ];
+
+
+        //letting the info to be printed stored in a variable
+        var gameQuiz = '<fieldset form="game"> <legend>Answer these QuicK Trivias!</legend> <p>These are multiple choice questions. Please read the questions properly and choose your answer.</p> <br> <p>';
+       
+
+        //determining the questions
+        var iEasy = [Math.floor(Math.random() * easyQuestions.length)];
+        var iMedium = [Math.floor(Math.random() * mediumQuestions.length)];
+        var iDifficult = [Math.floor(Math.random() * difficultQuestions.length)];
+
+        function determineQuestions(questionsArray, indexArray) {
+            for (let i = 0; i < 4; i++) {
+                do {
+                    var isSameNumber = false;
+                    var num = Math.floor(Math.random() * questionsArray.length);
+                    
+                    for (let j = 0; j < indexArray.length; j++) {
+                        if (num == indexArray[j]) {
+                            isSameNumber = true;
+                        }
+                    }
+                } while (isSameNumber);
+                indexArray.push(num);
+            }
+        }
+        
+        determineQuestions(easyQuestions, iEasy);
+        determineQuestions(mediumQuestions, iMedium);
+        determineQuestions(difficultQuestions, iDifficult);
+        
+
+        //FUNCTION THAT GENERATES THE CONTENT OF THE GAME
+        function generateGame() {
+            for (let i = 0; i < 5; i++)
+            {
+                //EASY QUESTION
+                gameQuiz += easyQuestions[iEasy[i]]["question"] + '</p>' + 
+                    '<input type="radio" id="easy' + iEasy[i] + 'choice1" name="easy' + iEasy[i] + '" value="' + easyQuestions[iEasy[i]]["choice1"] + '" required>  <label for="easy' + iEasy[i] + 'choice1">' + easyQuestions[iEasy[i]]["choice1"] + '</label> <br>' +
+                    '<input type="radio" id="easy' + iEasy[i] + 'choice2" name="easy' + iEasy[i] + '" value="' + easyQuestions[iEasy[i]]["choice2"] + '" required>  <label for="easy' + iEasy[i] + 'choice2">' + easyQuestions[iEasy[i]]["choice2"] + '</label> <br>' +
+                    '<input type="radio" id="easy' + iEasy[i] + 'choice3" name="easy' + iEasy[i] + '" value="' + easyQuestions[iEasy[i]]["choice3"] + '" required>  <label for="easy' + iEasy[i] + 'choice3">' + easyQuestions[iEasy[i]]["choice3"] + '</label> <br>' +
+                    '<input type="radio" id="easy' + iEasy[i] + 'choice4" name="easy' + iEasy[i] + '" value="' + easyQuestions[iEasy[i]]["choice4"] + '" required>  <label for="easy' + iEasy[i] + 'choice4">' + easyQuestions[iEasy[i]]["choice4"] + '</label> <br>' +
+                    '<br> <p>' +
+                //MEDIUM QUESTION
+                mediumQuestions[iMedium[i]]["question"] + '</p>' +
+                    '<input type="radio" id="medium' + iMedium[i] + 'choice1" name="medium' + iMedium[i] + '" value="' + mediumQuestions[iMedium[i]]["choice1"] + '" required>  <label for="medium' + iMedium[i] + 'choice1">' + mediumQuestions[iMedium[i]]["choice1"] + '</label> <br>' +
+                    '<input type="radio" id="medium' + iMedium[i] + 'choice2" name="medium' + iMedium[i] + '" value="' + mediumQuestions[iMedium[i]]["choice2"] + '" required>  <label for="medium' + iMedium[i] + 'choice2">' + mediumQuestions[iMedium[i]]["choice2"] + '</label> <br>' +
+                    '<input type="radio" id="medium' + iMedium[i] + 'choice3" name="medium' + iMedium[i] + '" value="' + mediumQuestions[iMedium[i]]["choice3"] + '" required>  <label for="medium' + iMedium[i] + 'choice3">' + mediumQuestions[iMedium[i]]["choice3"] + '</label> <br>' +
+                    '<input type="radio" id="medium' + iMedium[i] + 'choice4" name="medium' + iMedium[i] + '" value="' + mediumQuestions[iMedium[i]]["choice4"] + '" required>  <label for="medium' + iMedium[i] + 'choice4">' + mediumQuestions[iMedium[i]]["choice4"] + '</label> <br>' +
+                    '<br> <p>' +
+                //DIFFICULT QUESTIION
+                difficultQuestions[iDifficult[i]]["question"] + '</p>' +
+                    '<input type="radio" id="difficult' + iDifficult[i] + 'choice1" name="difficult' + iDifficult[i] + '" value="' +  difficultQuestions[iDifficult[i]]["choice1"] + '" required>   <label for="difficult' + iDifficult[i] + 'choice1">' +  difficultQuestions[iDifficult[i]]["choice1"] + '</label> <br>' +
+                    '<input type="radio" id="difficult' + iDifficult[i] + 'choice2" name="difficult' + iDifficult[i] + '" value="' +  difficultQuestions[iDifficult[i]]["choice2"] + '" required>   <label for="difficult' + iDifficult[i] + 'choice2">' +  difficultQuestions[iDifficult[i]]["choice2"] + '</label> <br>' +
+                    '<input type="radio" id="difficult' + iDifficult[i] + 'choice3" name="difficult' + iDifficult[i] + '" value="' +  difficultQuestions[iDifficult[i]]["choice3"] + '" required>   <label for="difficult' + iDifficult[i] + 'choice3">' +  difficultQuestions[iDifficult[i]]["choice3"] + '</label> <br>' +
+                    '<input type="radio" id="difficult' + iDifficult[i] + 'choice4" name="difficult' + iDifficult[i] + '" value="' +  difficultQuestions[iDifficult[i]]["choice4"] + '" required>   <label for="difficult' + iDifficult[i] + 'choice4">' +  difficultQuestions[iDifficult[i]]["choice4"] + '</label> <br>' +
+                    '<br> <p>';
+            }
+            gameQuiz += '<input type = "submit" value = "Submit your answers!"> </p>'; //no reset button because that would just be annoying for the user if they misclick
+            
+            //prints the form
+            document.getElementById("game").innerHTML = gameQuiz + '</fieldset>';
+        }
+
+        //FUNCTION THAT COMPUTES FOR SCORE
+        function getScore(questionsArray, indexArray, nm, add) {
+            var score = 0;
+            
+            for (let i = 0; i < 5; i++) {
+                var radios = document.getElementsByName(nm + indexArray[i]);
+                var selected = Array.from(radios).find(radio => radio.checked);
+                
+                if (selected.value == questionsArray[indexArray[i]]["rightAnswer"]) {
+                    score += add;
+                }
+            }
+            
+            return score;
+        }
+
+        //FUNCTION THAT GENERATES THE RESULTS
+        function generateResults() {
+            var factsFinalScore = getScore(easyQuestions, iEasy, "easy", 1) + getScore(mediumQuestions, iMedium, "medium", 2) + getScore(difficultQuestions, iDifficult, "difficult", 3);
+            document.getElementById("results").innerHTML = "You scored " + factsFinalScore + " out of 30!";
+            return false;
+        }
+    </script>
+</body>
+</html>

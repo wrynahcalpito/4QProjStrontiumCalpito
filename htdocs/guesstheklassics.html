@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>K-lassically: Guess the Klassics</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Wrynah Dale Calpito">
+    <meta name="revised" content="07-05-2022">
+    <meta name="keywords" content="Kpop, Korea, trivia, quiz game, fun facts">
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="../images/logo.png">
+    <link rel="stylesheet" type="text/css" href="../css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap" rel="stylesheet">
+</head>
+
+<body onload="generateGame()">
+    <!--NAVIGATION-->
+    <nav>
+        <header>
+            <a href="../index.html"> <img src="../images/logo.png" title="K-lassically Logo" alt="K-lassically Logo" id="logo" width="100px" height="100px"> </a>
+            <img src="../images/header.png" title="K-lassically" alt="K-lassically" id="header" height="75px">
+        </header>
+
+        <ul>
+            <li><a href="quickfacts.html">QuicK Facts</a></li>
+            <li><a href="guesstheklassics.html">Guess the Klassics</a></li>
+        </ul>
+    </nav>
+    
+    <!--THE GAME-->
+    <form id="game" method="post" autocomplete="off" onsubmit="return generateResults()"> 
+    </form>
+
+    <!--THE RESULTS FOR THAT GAME-->
+    <div id="results"></div>
+
+    <script> 
+        //QUESTION BANK
+        var songQuestions = [
+            {item:"../mmfiles/song/4 walls - fx.mp3", song:"4 WALLS", artist:"F(X)"},
+            {item:"../mmfiles/song/24 hours.mp3", song:"24 HOURS", artist:"SUNMI"},
+            {item:"../mmfiles/song/a - got7.mp3", song:"A", artist:"GOT7"}, 
+            {item:"../mmfiles/song/as if its your last - blackpink.mp3", song:"AS IF IT'S YOUR LAST", artist:"BLACKPINK"}, 
+            {item:"../mmfiles/song/bad boy - big bang.mp3", song:"BAD BOY", artist:"BIG BANG"}, 
+            {item:"../mmfiles/song/bad girl good girl - miss a.mp3", song:"BAD GIRL, GOOD GIRL", artist:"MISS A"}, 
+            {item:"../mmfiles/song/bang bang bang - big bang.mp3", song:"BANG BANG BANG", artist:"BIG BANG"}, 
+            {item:"../mmfiles/song/bling bling - ikon.mp3", song:"BLING BLING", artist:"IKON"}, 
+            {item:"../mmfiles/song/bubble pop - hyuna.mp3", song:"BUBBLE POP", artist:"HYUNA"}, 
+            {item:"../mmfiles/song/call me baby - exo.mp3", song:"CALL ME BABY", artist:"EXO"}, 
+            {item:"../mmfiles/song/catallena - orange caramel.mp3", song:"CATALLENA", artist:"ORANGE CARAMEL"}, 
+            {item:"../mmfiles/song/chained up - vixx.mp3", song:"CHAINED UP", artist:"VIXX"},
+            {item:"../mmfiles/song/cherry bomb - nct 127.mp3", song:"CHERRY BOMB", artist:"NCT 127"},
+            {item:"../mmfiles/song/come back home - 2ne1.mp3", song:"COME BACK HOME", artist:"2NE1"}, 
+            {item:"../mmfiles/song/don't wanna cry.mp3", song:"DON'T WANNA CRY", artist:"SEVENTEEN"}, 
+            {item:"../mmfiles/song/electric shock - fx.mp3", song:"ELECTRIC SHOCK", artist:"F(X)"}, 
+            {item:"../mmfiles/song/energetic - wanna one.mp3", song:"ENERGETIC", artist:"WANNA ONE"}, 
+            {item:"../mmfiles/song/fantastic baby - big bang.mp3", song:"FANTASTIC BABY", artist:"BIG BANG"}, 
+            {item:"../mmfiles/song/full moon - sunmi.mp3", song:"FULL MOON", artist:"SUNMI"}, 
+            {item:"../mmfiles/song/gashina - sunmi.mp3", song:"GASHINA", artist:"SUNMI"}, 
+            {item:"../mmfiles/song/gentleman - psy.mp3", song:"GENTLEMAN", artist:"PSY"}, 
+            {item:"../mmfiles/song/goodbye baby.mp3", song:"GOOD-BYE BABY", artist:"MISS A"},
+            {item:"../mmfiles/song/hero - monsta x.mp3", song:"HERO", artist:"MONSTA X"}, 
+            {item:"../mmfiles/song/hush - miss a.mp3", song:"HUSH", artist:"MISS A"}, 
+            {item:"../mmfiles/song/i am the best - 2ne1.mp3", song:"I AM THE BEST", artist:"2NE1"}, 
+            {item:"../mmfiles/song/i need u - bts.mp3", song:"I NEED U", artist:"BTS"}, 
+            {item:"../mmfiles/song/ice cream cake - red velvet.mp3", song:"ICE CREAM CAKE", artist:"RED VELVET"}, 
+            {item:"../mmfiles/song/just right - got7.mp3", song:"JUST RIGHT", artist:"GOT7"}, 
+            {item:"../mmfiles/song/ko ko bop - exo.mp3", song:"KO KO BOP", artist:"EXO"}, 
+            {item:"../mmfiles/song/like a cat - aoa.mp3", song:"LIKE A CAT", artist:"AOA"}, 
+            {item:"../mmfiles/song/loser - big bang.mp3", song:"LOSER", artist:"BIG BANG"}, 
+            {item:"../mmfiles/song/love scenario - ikon.mp3", song:"LOVE SCENARIO", artist:"IKON"}, 
+            {item:"../mmfiles/song/love whisper - gfriend.mp3", song:"LOVE WHISPER", artist:"GFRIEND"}, 
+            {item:"../mmfiles/song/ma boy - sistar.mp3", song:"MA BOY", artist:"SISTAR"}, 
+            {item:"../mmfiles/song/mansae - seventeen.mp3", song:"MANSAE", artist:"SEVENTEEN"}, 
+            {item:"../mmfiles/song/me gustas tu.mp3", song:"ME GUSTAS TU", artist:"GFRIEND"}, 
+            {item:"../mmfiles/song/miniskirt - aoa.mp3", song:"MINISKIRT", artist:"AOA"}, 
+            {item:"../mmfiles/song/mirotic - tvxq.mp3", song:"MIROTIC", artist:"TVXQ"}, 
+            {item:"../mmfiles/song/mister - kara.mp3", song:"MISTER", artist:"KARA"}, 
+            {item:"../mmfiles/song/move - taemin.mp3", song:"MOVE", artist:"TAEMIN"}, 
+            {item:"../mmfiles/song/mr chu.mp3", song:"MR. CHU", artist:"APINK"}, 
+            {item:"../mmfiles/song/mr simple - super junior.mp3", song:"MR. SIMPLE", artist:"SUPER JUNIOR"}, 
+            {item:"../mmfiles/song/like a cat - aoa.mp3", song:"LIKE A CAT", artist:"AOA"},
+            {item:"../mmfiles/song/my house - 2pm.mp3", song:"MY HOUSE", artist:"2PM"}, 
+            {item:"../mmfiles/song/never ever - got7.mp3", song:"NEVER EVER", artist:"GOT7"}, 
+            {item:"../mmfiles/song/nobody - wonder girls.mp3", song:"NOBODY", artist:"WONDER GIRLS"}, 
+            {item:"../mmfiles/song/rainism - rain.mp3", song:"RAINISM", artist:"RAIN"}, 
+            {item:"../mmfiles/song/really really - winner.mp3", song:"REALLY REALLY", artist:"WINNER"}, 
+            {item:"../mmfiles/song/red flavor - red velvet.mp3", song:"RED FLAVOR", artist:"RED VELVET"}, 
+            {item:"../mmfiles/song/replay - shinee.mp3", song:"REPLAY", artist:"SHINEE"}, 
+            {item:"../mmfiles/song/ring ding dong - shinee.mp3", song:"RING DING DONG", artist:"SHINEE"}, 
+            {item:"../mmfiles/song/signal - twice.mp3", song:"SIGNAL", artist:"TWICE"}, 
+            {item:"../mmfiles/song/so hot - wonder girls.mp3", song:"SO HOT", artist:"WONDER GIRLS"}, 
+            {item:"../mmfiles/song/something - girls day.mp3", song:"SOMETHING", artist:"GIRL'S DAY"}, 
+            {item:"../mmfiles/song/sorry sorry - super junior.mp3", song:"SORRY SORRY", artist:"SUPER JUNIOR"}, 
+            {item:"../mmfiles/song/sugar free - t-ara.mp3", song:"SUGAR FREE", artist:"T-ARA"}, 
+            {item:"../mmfiles/song/tell me - wonder girls.mp3", song:"TELL ME", artist:"WONDER GIRLS"}, 
+            {item:"../mmfiles/song/touch my body - sistar.mp3", song:"TOUCH MY BODY", artist:"SISTAR"}, 
+            {item:"../mmfiles/song/trouble maker - trouble maker.mp3", song:"TROUBLE MAKER", artist:"TROUBLE MAKER"}, 
+            {item:"../mmfiles/song/very nice - seventeen.mp3", song:"VERY NICE", artist:"SEVENTEEN"}
+        ]; 
+        var choreographyQuestions = [ 
+            {item:"../images/choreography/0x1lovesong - txt.png", song:"0X1=LOVESONG", artist:"TXT"}, 
+            {item:"../images/choreography/abracadabra - brown eyed girls.png", song:"ABACADABRA", artist:"BROWN EYED GIRLS"},
+            {item:"../images/choreography/alcohol-free - twice.png", song:"ALCOHOL-FREE", artist:"TWICE"}, 
+            {item:"../images/choreography/bang bang bang - big bang.png", song:"BANG BANG BANG", artist:"BIG BANG"}, 
+            {item:"../images/choreography/boombayah - blackpink.png", song:"BOOMBAYAH", artist:"BLACKPINK"}, 
+            {item:"../images/choreography/bop bop - viviz.png", song:"BOP BOP!", artist:"VIVIZ"}, 
+            {item:"../images/choreography/butter - bts.png", song:"BUTTER", artist:"BTS"},
+            {item:"../images/choreography/cheer up - twice.png", song:"CHEER UP", artist:"TWICE"}, 
+            {item:"../images/choreography/crazy - 4minute.png", song:"CRAZY", artist:"4MINUTE"}, 
+            {item:"../images/choreography/ddu-du ddu-du - blackpink.png", song:"DDU-DU DDU-DU", artist:"BLACKPINK"}, 
+            {item:"../images/choreography/dna - bts.png", song:"DNA", artist:"BTS"}, 
+            {item:"../images/choreography/dreams come true - aespa.png", song:"DREAMS COME TRUE", artist:"AESPA"}, 
+            {item:"../images/choreography/dun dun dance - oh my girl.png", song:"DUN DUN DANCE", artist:"OH MY GIRL"}, 
+            {item:"../images/choreography/eleven - ive.png", song:"ELEVEN", artist:"IVE"},
+            {item:"../images/choreography/gangnam style - psy.png", song:"GANGNAM STYLE", artist:"PSY"}, 
+            {item:"../images/choreography/gingamingayo - billlie.png", song:"GINGAMINGAYO", artist:"BILLLIE"}, 
+            {item:"../images/choreography/hot sauce - nct dream.png", song:"HOT SAUCE", artist:"NCT DREAM"}, 
+            {item:"../images/choreography/just right - got7.png", song:"JUST RIGHT", artist:"GOT7"}, 
+            {item:"../images/choreography/lion - gi-dle.png", song:"LION", artist:"(G)I-DLE"}, 
+            {item:"../images/choreography/me gustas tu - gfriend.png", song:"ME GUSTAS TU", artist:"GFRIEND"}, 
+            {item:"../images/choreography/mr chu - apink.png", song:"MR. CHU", artist:"APINK"},
+            {item:"../images/choreography/next level - aespa.png", song:"NEXT LEVEL", artist:"AESPA"}, 
+            {item:"../images/choreography/oo - nmixx.png", song:"O.O", artist:"NMIXX"}, 
+            {item:"../images/choreography/peaches - kai.png", song:"PEACHES", artist:"KAI"}, 
+            {item:"../images/choreography/sorry sorry - super junior.png", song:"SORRY, SORRY", artist:"SUPER JUNIOR"}, 
+            {item:"../images/choreography/spider - hoshi.png", song:"SPIDER", artist:"HOSHI"},
+            {item:"../images/choreography/sugar free - t-ara.png", song:"SUGAR FREE", artist:"T-ARA"},
+            {item:"../images/choreography/tell me - wonder girls.png", song:"TELL ME", artist:"WONDER GIRLS"},
+            {item:"../images/choreography/touch my body - sistar.png", song:"TOUCH MY BODY", artist:"SISTAR"},
+            {item:"../images/choreography/updown - exid.png", song:"UP&DOWN", artist:"EXID"},
+            {item:"../images/choreography/very nice - seventeen.png", song:"VERY NICE", artist:"SEVENTEEN"},
+            {item:"../images/choreography/wa da da - kep1er.png", song:"WA DA DA", artist:"KEP1ER"},
+            {item:"../images/choreography/wannabe - itzy.png", song:"WANNABE", artist:"ITZY"},
+            {item:"../images/choreography/wolf - exo.png", song:"WOLF", artist:"EXO"}
+        ];
+        var musicVideoQuestions = [
+            {item:"../images/music video/after school - weeekly.png", song:"AFTER SCHOOL", artist:"WEEEKLY"},
+            {item:"../images/music video/baby - astro.png", song:"BABY", artist:"ASTRO"},
+            {item:"../images/music video/bbibbi - iu.png", song:"BBIBBI", artist:"IU"},
+            {item:"../images/music video/blood sweat tears - bts.png", song:"BLOOD SWEAT & TEARS", artist:"BTS"},
+            {item:"../images/music video/boca - dreamcatcher.png", song:"BOCA", artist:"DREAMCATCHER"},
+            {item:"../images/music video/bon bon chocolat - everglow.png", song:"BON BON CHOCOLAT", artist:"EVERGLOW"},
+            {item:"../images/music video/butterfly - loona.png", song:"BUTTERFLY", artist:"LOONA"},
+            {item:"../images/music video/come back home - seo taiji and boys.png", song:"COME BACK HOME", artist:"SEO TAIJI AND BOYS"},
+            {item:"../images/music video/dalla dalla - itzy.png", song:"DALLA DALLA", artist:"ITZY"},
+            {item:"../images/music video/dont wanna cry - seventeen.png", song:"DON'T WANNA CRY", artist:"SEVENTEEN"},
+            {item:"../images/music video/electric shock - fx.png", song:"ELECTRIC SHOCK", artist:"F(X)"},
+            {item:"../images/music video/fancy - twice.png", song:"FANCY", artist:"TWICE"},
+            {item:"../images/music video/fantastic baby - big bang.png", song:"FANTASTIC BABY", artist:"BIG BANG"},
+            {item:"../images/music video/gashina - sunmi.png", song:"GASHINA", artist:"SUNMI"},
+            {item:"../images/music video/gods menu - stray kids.png", song:"GOD'S MENU", artist:"STRAY KIDS"},
+            {item:"../images/music video/i am the best - 2ne1.png", song:"I AM THE BEST", artist:"2NE1"},
+            {item:"../images/music video/killing me - ikon.png", song:"KILLING ME", artist:"IKON"},
+            {item:"../images/music video/la vie en rose - izone.png", song:"LA VIE EN ROSE", artist:"IZONE"},
+            {item:"../images/music video/lip hip - hyuna.png", song:"LIP & HIP", artist:"HYUNA"},
+            {item:"../images/music video/love dive - ive.png", song:"LOVE DIVE", artist:"IVE"},
+            {item:"../images/music video/after school - weeekly.png", song:"AFTER SCHOOL", artist:"WEEEKLY"},
+            {item:"../images/music video/love girl - cnblue.png", song:"LOVE GIRL", artist:"CNBLUE"},
+            {item:"../images/music video/lovesick girls - blackpink.png", song:"LOVESICK GIRLS", artist:"BLACKPINK"},
+            {item:"../images/music video/lucifer - shinee.png", song:"LUCIFER", artist:"SHINEE"},
+            {item:"../images/music video/mamacita - super junior.png", song:"MAMACITA", artist:"SUPER JUNIOR"},
+            {item:"../images/music video/mirotic - tvxq.png", song:"MIROTIC", artist:"TVXQ"},
+            {item:"../images/music video/my house - 2pm.png", song:"MY HOUSE", artist:"2PM"},
+            {item:"../images/music video/numb - jessi.png", song:"NUMB", artist:"JESSI"},
+            {item:"../images/music video/oh my god - gidle.png", song:"OH MY GOD", artist:"(G)I-DLE"},
+            {item:"../images/music video/psycho - red velvet.png", song:"PSYCHO", artist:"RED VELVET"},
+            {item:"../images/music video/re-bye - akmu.png", song:"RE-BYE", artist:"AKMU"},
+            {item:"../images/music video/rough - gfriend.png", song:"ROUGH", artist:"GFRIEND"},
+            {item:"../images/music video/shine - pentagon.png", song:"SHINE", artist:"PENTAGON"},
+            {item:"../images/music video/snapping - chungha.png", song:"SNAPPING", artist:"CHUNGHA"},
+            {item:"../images/music video/why so lonely - wonder girls.png", song:"WHY SO LONELY", artist:"WONDER GIRLS"},
+            {item:"../images/music video/you were beautiful - day6.png", song:"YOU WERE BEAUTIFUL", artist:"DAY6"},
+            {item:"../images/music video/zombie - day6.png", song:"ZOMBIE", artist:"DAY6"}
+        ];
+
+
+        //letting the info to be printed stored in a variable
+        var gameQuiz = '<fieldset form="game"> <legend>Go on and Guess the Klassics!</legend> <p>These are free-response questions. You will have to guess the song, the choreography, or the music video. In answering, the spaces in between the words and the punctuation marks will matter but not the capitalization; please be careful.</p> <br> <p>';
+       
+
+        //determining the questions
+        var iSong = [Math.floor(Math.random() * songQuestions.length)];
+        var iChoreography = [Math.floor(Math.random() * choreographyQuestions.length)];
+        var iMusicVideo = [Math.floor(Math.random() * musicVideoQuestions.length)];
+
+        function determineQuestions(questionsArray, indexArray) {
+            for (let i = 0; i < 4; i++) {
+                do {
+                    var isSameNumber = false;
+                    var num = Math.floor(Math.random() * questionsArray.length);
+                    
+                    for (let j = 0; j < indexArray.length; j++) {
+                        if (num == indexArray[j]) {
+                            isSameNumber = true;
+                        }
+                    }
+                } while (isSameNumber);
+                indexArray.push(num);
+            }
+        }
+        
+        determineQuestions(songQuestions, iSong);
+        determineQuestions(choreographyQuestions, iChoreography);
+        determineQuestions(musicVideoQuestions, iMusicVideo);
+        
+
+        //FUNCTION THAT GENERATES THE CONTENT OF THE GAME
+        function generateGame() {
+            for (let i = 0; i < 5; i++)
+            {
+                //SONG QUESTION
+                gameQuiz += '<audio controls> <source src="' + songQuestions[iSong[i]]["item"] + '" type="audio/mpeg"> Unfortunately, your browser does not support the audio element. </audio> </p>' + 
+                    '<label for="itemSong' + iSong[i] + 'song"> Song Title: </label>    <input type="text" id="itemSong' + iSong[i] + 'song" name="itemSong' + iSong[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemSong' + iSong[i] + 'artist"> Artist: </label>    <input type="text" id="itemSong' + iSong[i] + 'artist" name="itemSong' + iSong[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<br> <p>' +
+                //CHOREOGRAPHY QUESTION
+                '<img src="' + choreographyQuestions[iChoreography[i]]["item"] + '"> </p>' + 
+                    '<label for="itemChoreography' + iChoreography[i] + 'song"> Song Title: </label>    <input type="text" id="itemChoreography' + iChoreography[i] + 'song" name="itemChoreography' + iChoreography[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemChoreography' + iChoreography[i] + 'artist"> Artist: </label>    <input type="text" id="itemChoreography' + iChoreography[i] + 'artist" name="itemChoreography' + iChoreography[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<br> <p>' +
+                //MUSIC VIDEO QUESTION
+                '<img src="' + musicVideoQuestions[iMusicVideo[i]]["item"] + '"> </p>' + 
+                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'song"> Song Title: </label>    <input type="text" id="itemMusicVideo' + iMusicVideo[i] + 'song" name="itemMusicVideo' + iMusicVideo[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'artist"> Artist: </label>    <input type="text" id="itemMusicVideo' + iMusicVideo[i] + 'artist" name="itemMusicVideo' + iMusicVideo[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<br> <p>';
+            }
+            gameQuiz += '<input type = "submit" value = "Submit your answers!"> </p>'; //no reset button because that would just be annoying for the user if they misclick
+            
+            //prints the form
+            document.getElementById("game").innerHTML = gameQuiz + '</fieldset>';
+        }
+
+        //FUNCTION THAT COMPUTES FOR SCORE
+        function getScore(questionsArray, indexArray, idName, answerType, add) {
+            var score = 0;
+            
+            for (let i = 0; i < 5; i++) {
+                var answer = document.getElementById(idName + indexArray[i] + answerType);
+                
+                if (answer.value.toUpperCase().trim() == questionsArray[indexArray[i]][answerType]) {
+                    score += add;
+                }
+            }
+            
+            return score;
+        }
+
+        //FUNCTION THAT GENERATES THE RESULTS
+        function generateResults() {
+            var guessFinalScore = 
+                getScore(songQuestions, iSong, "itemSong", "song", 0.5) + getScore(songQuestions, iSong, "itemSong", "artist", 0.5) + 
+                getScore(choreographyQuestions, iChoreography, "itemChoreography", "song", 1) + getScore(choreographyQuestions, iChoreography, "itemChoreography", "artist", 1) + 
+                getScore(musicVideoQuestions, iMusicVideo, "itemMusicVideo", "song", 1.5) + getScore(musicVideoQuestions, iMusicVideo, "itemMusicVideo", "artist", 1.5);
+            document.getElementById("results").innerHTML = "You scored " + guessFinalScore + " out of 30!";
+            return false;
+        }
+
+        //AESTHETICS FUNCTION which indicates the status of the individual HTML inputs
+        function borderColor(userInput) { 
+            if (userInput.value == "") {
+                userInput.style.border = "2px solid #FF6961";
+            }
+            else if (userInput.value !== "") {
+                userInput.style.border = "2px solid #8FE381";
+            }
+        }
+    </script>
+</body>
+</html>
