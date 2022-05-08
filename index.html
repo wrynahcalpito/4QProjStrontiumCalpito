@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>K-lassically: Home</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Wrynah Dale Calpito">
+    <meta name="revised" content="07-05-2022">
+    <meta name="keywords" content="Kpop, Korea, trivia, quiz game, fun facts">
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="images/logo.png">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav>
+        <header>
+            <a href="index.html"> <img src="images/logo.png" title="K-lassically Logo" alt="K-lassically Logo" id="logo" width="100px" height="100px"> </a>
+            <img src="images/header.png" title="K-lassically" alt="K-lassically" id="header" height="75px">
+        </header>
+
+        <ul>
+            <li><a href="htdocs/quickfacts.html">QuicK Facts</a></li>
+            <li><a href="htdocs/guesstheklassics.html">Guess the Klassics</a></li>
+        </ul>
+    </nav>
+
+    <!--MAIN CONTENT OF THE HOMEPAGE-->
+    <section id="mainContent">
+        <section id="leaderboards">
+            <h1>Leaderboards</h1>
+            <!--display of leaderboards will be done in phase 3-->
+        </section>
+
+        <!--USER INFORMATION DISPLAYED-->
+        <section id="userInfo">
+            <h1 id="usernameOutput">Username</h1>
+            <p id="aboutOutput">A player of K-lassically who is not logged in.</p>
+            <button onclick="openForm()">Open Log-in Form</button>
+        </section>
+
+        <section id="navGraphic">
+            <a href="htdocs/quickfacts.html"> <img src="images/nav quick facts.png" title="QuicK Facts" alt="QuicK Facts"> </a>
+            <a href="htdocs/guesstheklassics.html"> <img src="images/nav guess the klassics.png" title="Guess the Klassics" alt="Guess the Klassics"> </a>
+        </section>
+    </section>
+
+    <!--LOG-IN POP UP-->
+    <div class="formPopup" id="myForm">
+        <form id="logIn" onsubmit="return printInfo()">
+            <h1>Login</h1>
+      
+            <label for="username">Username</label> <br>
+            <input type="text" id="userName" name="userName" required>
+            <br> <br>
+
+            <label for="password">Password</label> <br>
+            <input type="password" id="password" name="password" required>
+            <br> <br>
+            
+            <label for="email">Email Address</label> <br>
+            <input type="email" id="emailAddress" name="emailAddress" required>
+            <br> <br>
+
+            <label for="about">Share something about yourself!</label> <br>
+            <textarea id="about" name="about" rows="8" cols="65" required></textarea>
+            <br> <br>
+            
+            <input type="submit" class="btn" value="Log-in">
+            <button type="button" class="btn" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <script>
+        var userName = document.getElementById("userName");
+        var password = document.getElementById("password");
+        var email = document.getElementById("emailAddress");
+        var about = document.getElementById("about");
+
+        function openForm() { //opens the form
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() { //closes the form
+            document.getElementById("myForm").style.display = "none";
+        }
+
+        if (userName.value == "") { //if there is no input for the username yet, the form is displayed upon loading
+            openForm();
+        }
+
+        function printInfo() { 
+            closeForm(); //closes the form when submitted
+
+            //prints the user information
+            document.getElementById("usernameOutput").innerHTML = userName.value;
+            document.getElementById("aboutOutput").innerHTML = about.value;
+
+            return false;
+        }
+    </script>
+</body>
+</html>
