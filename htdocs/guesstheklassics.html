@@ -177,7 +177,7 @@
 
 
         //letting the info to be printed stored in a variable
-        var gameQuiz = '<fieldset form="game"> <legend>Go on and Guess the Klassics!</legend> <p>These are free-response questions. You will have to guess the song, the choreography, or the music video. In answering, the spaces in between the words and the punctuation marks will matter but not the capitalization; please be careful.</p> <br> <p>';
+        var gameQuiz = '<fieldset form="game"> <legend>Go on and Guess the Klassics!</legend> <p id="instructions">These are free-response questions. You will have to guess the song, the choreography, or the music video. In answering, the spaces in between the words and the punctuation marks will matter but not the capitalization; please be careful.</p> <br> <p>';
        
 
         //determining the questions
@@ -212,21 +212,21 @@
             {
                 //SONG QUESTION
                 gameQuiz += '<audio controls> <source src="' + songQuestions[iSong[i]]["item"] + '" type="audio/mpeg"> Unfortunately, your browser does not support the audio element. </audio> </p>' + 
-                    '<label for="itemSong' + iSong[i] + 'song"> Song Title: </label>    <input type="text" id="itemSong' + iSong[i] + 'song" name="itemSong' + iSong[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
-                    '<label for="itemSong' + iSong[i] + 'artist"> Artist: </label>    <input type="text" id="itemSong' + iSong[i] + 'artist" name="itemSong' + iSong[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemSong' + iSong[i] + 'song" class="guessing1"> Song Title: </label>    <input class="guessing1" type="text" id="itemSong' + iSong[i] + 'song" name="itemSong' + iSong[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemSong' + iSong[i] + 'artist" class="guessing2"> Artist: </label>    <input class="guessing2" type="text" id="itemSong' + iSong[i] + 'artist" name="itemSong' + iSong[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
                     '<br> <p>' +
                 //CHOREOGRAPHY QUESTION
                 '<img src="' + choreographyQuestions[iChoreography[i]]["item"] + '"> </p>' + 
-                    '<label for="itemChoreography' + iChoreography[i] + 'song"> Song Title: </label>    <input type="text" id="itemChoreography' + iChoreography[i] + 'song" name="itemChoreography' + iChoreography[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
-                    '<label for="itemChoreography' + iChoreography[i] + 'artist"> Artist: </label>    <input type="text" id="itemChoreography' + iChoreography[i] + 'artist" name="itemChoreography' + iChoreography[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemChoreography' + iChoreography[i] + 'song" class="guessing1"> Song Title: </label>    <input class="guessing1" type="text" id="itemChoreography' + iChoreography[i] + 'song" name="itemChoreography' + iChoreography[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemChoreography' + iChoreography[i] + 'artist" class="guessing2"> Artist: </label>    <input class="guessing2" type="text" id="itemChoreography' + iChoreography[i] + 'artist" name="itemChoreography' + iChoreography[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
                     '<br> <p>' +
                 //MUSIC VIDEO QUESTION
                 '<img src="' + musicVideoQuestions[iMusicVideo[i]]["item"] + '"> </p>' + 
-                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'song"> Song Title: </label>    <input type="text" id="itemMusicVideo' + iMusicVideo[i] + 'song" name="itemMusicVideo' + iMusicVideo[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
-                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'artist"> Artist: </label>    <input type="text" id="itemMusicVideo' + iMusicVideo[i] + 'artist" name="itemMusicVideo' + iMusicVideo[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'song" class="guessing1"> Song Title: </label>    <input class="guessing1" type="text" id="itemMusicVideo' + iMusicVideo[i] + 'song" name="itemMusicVideo' + iMusicVideo[i] + 'song" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
+                    '<label for="itemMusicVideo' + iMusicVideo[i] + 'artist" class="guessing2"> Artist: </label>    <input class="guessing2" type="text" id="itemMusicVideo' + iMusicVideo[i] + 'artist" name="itemMusicVideo' + iMusicVideo[i] + 'artist" required onblur="borderColor(this)" onfocus="borderColor(this)"> <br>' +
                     '<br> <p>';
             }
-            gameQuiz += '<input type = "submit" value = "Submit your answers!"> </p>'; //no reset button because that would just be annoying for the user if they misclick
+            gameQuiz += '</p> <input type="submit" id="submitButton" value="Submit your answers!">'; //no reset button because that would just be annoying for the user if they misclick
             
             //prints the form
             document.getElementById("game").innerHTML = gameQuiz + '</fieldset>';
@@ -253,6 +253,7 @@
                 getScore(songQuestions, iSong, "itemSong", "song", 0.5) + getScore(songQuestions, iSong, "itemSong", "artist", 0.5) + 
                 getScore(choreographyQuestions, iChoreography, "itemChoreography", "song", 1) + getScore(choreographyQuestions, iChoreography, "itemChoreography", "artist", 1) + 
                 getScore(musicVideoQuestions, iMusicVideo, "itemMusicVideo", "song", 1.5) + getScore(musicVideoQuestions, iMusicVideo, "itemMusicVideo", "artist", 1.5);
+            
             document.getElementById("results").innerHTML = "You scored " + guessFinalScore + " out of 30!";
             return false;
         }
@@ -260,10 +261,10 @@
         //AESTHETICS FUNCTION which indicates the status of the individual HTML inputs
         function borderColor(userInput) { 
             if (userInput.value == "") {
-                userInput.style.border = "2px solid #FF6961";
+                userInput.style.border = "2px solid #7E7E94";
             }
             else if (userInput.value !== "") {
-                userInput.style.border = "2px solid #8FE381";
+                userInput.style.border = "2px solid #000080";
             }
         }
     </script>
