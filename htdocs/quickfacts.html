@@ -93,7 +93,7 @@
 
 
         //letting the info to be printed stored in a variable
-        var gameQuiz = '<fieldset form="game"> <legend>Answer these QuicK Trivias!</legend> <p>These are multiple choice questions. Please read the questions properly and choose your answer.</p> <br> <p>';
+        var gameQuiz = '<fieldset form="game"> <legend>Answer these QuicK Facts!</legend> <p id="instructions">These are multiple choice questions. Please read the questions properly and choose your answer.</p> <p>';
        
 
         //determining the questions
@@ -148,7 +148,7 @@
                     '<input type="radio" id="difficult' + iDifficult[i] + 'choice4" name="difficult' + iDifficult[i] + '" value="' +  difficultQuestions[iDifficult[i]]["choice4"] + '" required>   <label for="difficult' + iDifficult[i] + 'choice4">' +  difficultQuestions[iDifficult[i]]["choice4"] + '</label> <br>' +
                     '<br> <p>';
             }
-            gameQuiz += '<input type = "submit" value = "Submit your answers!"> </p>'; //no reset button because that would just be annoying for the user if they misclick
+            gameQuiz += '</p> <input type="submit" id="submitButton" value="Submit your answers!">'; //no reset button because that would just be annoying for the user if they misclick
             
             //prints the form
             document.getElementById("game").innerHTML = gameQuiz + '</fieldset>';
@@ -173,6 +173,7 @@
         //FUNCTION THAT GENERATES THE RESULTS
         function generateResults() {
             var factsFinalScore = getScore(easyQuestions, iEasy, "easy", 1) + getScore(mediumQuestions, iMedium, "medium", 2) + getScore(difficultQuestions, iDifficult, "difficult", 3);
+            
             document.getElementById("results").innerHTML = "You scored " + factsFinalScore + " out of 30!";
             return false;
         }
